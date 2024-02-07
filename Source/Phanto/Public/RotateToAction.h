@@ -13,7 +13,7 @@ class PHANTO_API URotateToAction : public UCancellableAsyncAction
 {
 	GENERATED_BODY()
 
-	UObject const * WorldContext;
+	TWeakObjectPtr<UObject const> WorldContext;
 	FRotator Start;
 	FRotator Target;
 	float Time;

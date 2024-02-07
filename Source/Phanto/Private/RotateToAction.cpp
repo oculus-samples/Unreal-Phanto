@@ -20,11 +20,17 @@ URotateToAction* URotateToAction::RotateTo(UObject const * WorldContext, FRotato
 
 void URotateToAction::Activate()
 {
-	if (WorldContext)
+	if (WorldContext.IsValid())
 	{
 		FTimerDelegate TimerDelegate;
 		TimerDelegate.BindWeakLambda(this, [this]
 			{
+				if (!WorldContext.IsValid())
+				{
+					Cancel();
+					return;
+				}
+				
 				auto const Alpha = WorldContext->GetWorld()->TimeSince(StartTime) / Time;
 
 				if (Alpha < 1)
