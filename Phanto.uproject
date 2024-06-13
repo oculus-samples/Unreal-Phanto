@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{673F3B41-49C1-6F78-C15F-2788BC2E9640}",
+	"EngineAssociation": "5.3",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -28,6 +28,14 @@
 		{
 			"Name": "SlateInsights",
 			"Enabled": true
+		},
+		{
+			"Name": "MetaXRHaptics",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Android"
+			]
 		}
 	],
 	"TargetPlatforms": [

@@ -1,0 +1,22 @@
+License for Meta XR Haptics Studio Haptic Packs
+Copyright (c) 2015, Oculus VR, LLC. All rights reserved.
+
+Licensed under the Creative Commons Attribution 4.0
+License (the "License"). You may obtain a copy of the License at
+https://creativecommons.org/licenses/by/4.0/.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+
+For audio assets in the sample pack:
+
+Sound Collection Terms
+
+These Sound Collection terms (“Terms”) are made and entered into by and between Meta Platforms, Inc. and Meta Platforms Ireland Limited (“Meta”) and the person or entity accepting these Terms (“you” or “your”). These Terms are deemed accepted and agreed to by you on the date that you indicate your assent to these Terms by clicking “accept” (“Effective Date”). If you are accepting on behalf of a legal entity, you represent and warrant that you are an authorized representative of such entity with the authority to bind it to these Terms.
+A. Sound Collection contains high quality audio sound content (the “SC Audio Content”) for you to enhance your content on the Meta Company Products. Meta hereby grants you a non-exclusive, royalty-free license to use the SC Audio Content for commercial or non-commercial purposes in content you create, upload, and distribute on the Meta Company Products (including through links to the Meta Company Products embedded in third party sites) only. You may not perform, distribute, make available or otherwise use the SC Audio Content separately from the Meta Company Products. This license is subject to your compliance with these Terms and all other applicable Meta terms, policies, and standards, including without limitation, Meta’s Terms of Service (collectively, the “Meta Terms”).
+B. Meta reserves all rights and remedies for use of any SC Audio Content by you outside of the uses permitted above without Meta’s express prior written consent.
+C. In the event of any conflict between these Terms and the Meta Terms, these Terms will govern solely with respect to your use of Sound Collection, and solely to the extent of the conflict. Meta reserves the right to monitor or audit your compliance with these Terms and to update these terms from time to time, and your continued use of Sound Collection constitutes acceptance of those changes.
+
+Last Modified: March 16, 2022

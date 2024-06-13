@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+    <resourceCopies>
+        <log text="Copying libhaptics_sdk.so into APK build directory" />
+        <copyFile
+            src="$S(PluginDir)/../ThirdParty/lib/Android/libhaptics_sdk.so"
+            dst="$S(BuildDir)/libs/arm64-v8a/libhaptics_sdk.so"
+        />
+    </resourceCopies>
+</root>

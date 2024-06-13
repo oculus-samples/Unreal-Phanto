@@ -1,0 +1,49 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "63.0.0",
+	"FriendlyName": "Meta XR Haptics SDK",
+	"Description": "SDK for playback of haptics created in Meta Haptics Studio on Quest devices ",
+	"Category": "Haptics",
+	"CreatedBy": "Meta Platforms, Inc.",
+	"CreatedByURL": "https://www.meta.com/",
+	"DocsURL": "https://developer.oculus.com/experimental/exp-haptics-studio/",
+	"MarketplaceURL": "",
+	"SupportURL": "https://communityforums.atmeta.com/t5/Developer/ct-p/developer",
+	"EngineVersion": "{673F3B41-49C1-6F78-C15F-2788BC2E9640}",
+	"CanContainContent": true,
+	"Installed": true,
+	"SupportedTargetPlatforms": [
+		"Win64",
+		"Android"
+	],
+	"Modules": [
+		{
+			"Name": "MetaXRHaptics",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Android"
+			]
+		},
+		{
+			"Name": "MetaXRHapticsEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "OculusXR",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Android"
+			]
+		}
+	]
+}
