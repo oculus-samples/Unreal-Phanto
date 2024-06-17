@@ -13,6 +13,8 @@ is a low-fidelity, high-coverage artifact which describes the boundary between
 free and occupied space in a room. It is generated automatically during the
 Space Setup experience, and available for applications to query via Scene API.
 
+The haptic assets used in this project have been designed with [Haptics Studio](https://developer.oculus.com/documentation/unity/haptics-studio/), and were integrated using the [Haptics SDK for Unreal](https://developer.oculus.com/documentation/unreal/unreal-haptics-sdk) following our [Haptic Design Guidelines](https://developer.oculus.com/resources/haptics-design-guidelines/).
+
 ## License
 
 This codebase is available as both a reference and a template for mixed reality
@@ -221,11 +223,17 @@ graph TD;
 
 # Device Compatibility
 
-| Device    | Scene API | Color Passthrough | High res color | Scene Mesh |
-| :-------- | :-------: | :---------------: | :------------: | :--------: |
-| Quest 3   |    ✔️     |        ✔️         |       ✔️       |     ✔️     |
-| Quest Pro |    ✔️     |        ✔️         |       ❌       |     ❌     |
-| Quest 2   |    ✔️     |        ❌         |       ❌       |     ❌     |
+| Device    | Scene API | Color Passthrough | High res color | Scene Mesh | Haptics<sup>[1](#HapticsQuality)</sup> |
+| :-------- | :-------: | :---------------: | :------------: | :--------: | :--------: |
+| Quest 3   |    ✔️     |        ✔️         |       ✔️       |     ✔️     |     ✔️     |
+| Quest Pro |    ✔️     |        ✔️         |       ❌       |     ❌     |     ✔️     |
+| Quest 2   |    ✔️     |        ❌         |       ❌       |     ❌     |     ✔️     |
+
+<a name="HapticsQuality">1</a>: There have been significant improvements in the
+haptics capability of Quest Pro and Quest 3 controllers over Quest 2: Quest Pro
+and Quest 3 introduce TruTouch haptics, enabling a new level of immersion in
+your applications. For more information, visit our
+[Haptic Design Guidelines](https://developer.oculus.com/resources/haptics-design-guidelines/#meta-quest-platform-and-haptic-hardware-considerations).
 
 # Key components
 
@@ -357,6 +365,14 @@ are used to manage sound, GUI alerts, runtime assets, and game events.
 |                          Object Placement                           |                                AI Navigation                                 |
 | :-----------------------------------------------------------------: | :--------------------------------------------------------------------------: |
 | ![Gameplay_Blaster](./Media/GameplayBlaster.gif 'Gameplay_Blaster') | ![Gameplay_Navigation](./Media/GameplayNavigation.gif 'Gameplay_Navigation') |
+
+## HapticsScene
+
+Showcases the integration of haptics with dynamic modulation tied to controller interactions: Pressing the index or grab button will trigger a synchronized audio-haptic effect. Moving the thumbstick up or down will modulate the amplitude of the effect, while moving it left or right will modulate the frequency.
+
+The haptic assets used in this project have been designed with [Haptics Studio](https://developer.oculus.com/documentation/unity/haptics-studio/), and were integrated using the [Haptics SDK for Unreal](https://developer.oculus.com/documentation/unreal/unreal-haptics-sdk) following our [Haptic Design Guidelines](https://developer.oculus.com/resources/haptics-design-guidelines/).
+
+To learn more about the Haptics SDK for Unreal, and how dynamically modulated haptics were implemented, check out the [BP_VRExamplePawn](https://github.com/oculus-samples/Unreal-Phanto/blob/main/Plugins/MetaXRHaptics/Content/Example/Blueprints/BP_VRExamplePawn.uasset) blueprint in the Haptics Scene, or the `Play random sound and haptic` function in the [BP_Phanto](https://github.com/oculus-samples/Unreal-Phanto/blob/main/Content/Phanto/Enemies/Phanto/BP_Phanto.uasset) blueprint for the Phanto haptics featured in the main game loop!
 
 # Features illustrated
 
