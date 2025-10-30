@@ -10,7 +10,7 @@
 	"DocsURL": "https://developer.oculus.com/experimental/exp-haptics-studio/",
 	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/4fe0628096b34166b616f74c4ed974af",
 	"SupportURL": "https://communityforums.atmeta.com/t5/Developer/ct-p/developer",
-	"EngineVersion": "5.5.0",
+	"EngineVersion": "",
 	"CanContainContent": true,
 	"Installed": true,
 	"SupportedTargetPlatforms": [
