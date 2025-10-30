@@ -21,6 +21,7 @@
 #pragma once
 
 #include "Modules/ModuleManager.h"
+#include "Misc/EngineVersionComparison.h"
 #include "MetaXRHapticClipAssetTypeActions.h"
 
 /**
@@ -33,8 +34,9 @@ public:
 	virtual void ShutdownModule() override;
 
 private:
+#if !UE_VERSION_OLDER_THAN(5, 0, 0)
 	TSharedPtr<FSlateStyleSet> Style;
 	void SetupStyle();
-
+#endif
 	TSharedPtr<FMetaXRHapticClipAssetTypeActions> HapticClipAssetTypeActions;
 };

@@ -25,9 +25,19 @@ extern "C"
 {
   typedef struct HapticsSdkNullBackendStats
   {
+    int64_t stream_count;
     int64_t play_call_count;
-    int64_t samples_played;
   } HapticsSdkNullBackendStats;
 
   HapticsSdkNullBackendStats haptics_sdk_get_null_backend_statistics(void);
+
+  HapticsSdkResult haptics_sdk_initialize_with_openxr_from_game_engine(
+      XrInstance openxr_instance,
+      const char *game_engine_name,
+      const char *game_engine_version,
+      const char *game_engine_haptics_sdk_version);
+
+  HapticsSdkResult haptics_sdk_create_openxr_action_set(XrActionSet *action_set_out);
+
+  HapticsSdkResult haptics_sdk_destroy_openxr_action_set(XrActionSet action_set);
 }

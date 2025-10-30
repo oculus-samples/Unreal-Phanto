@@ -31,12 +31,14 @@ void FMetaXRHapticsEditorModule::StartupModule()
 	HapticClipAssetTypeActions = MakeShared<FMetaXRHapticClipAssetTypeActions>();
 	FAssetToolsModule::GetModule().Get().RegisterAssetTypeActions(HapticClipAssetTypeActions.ToSharedRef());
 
+#if !UE_VERSION_OLDER_THAN(5, 0, 0)
 	SetupStyle();
 
 	if (Style.IsValid())
 	{
 		FSlateStyleRegistry::RegisterSlateStyle(*Style);
 	}
+#endif
 }
 
 void FMetaXRHapticsEditorModule::ShutdownModule()
@@ -47,13 +49,16 @@ void FMetaXRHapticsEditorModule::ShutdownModule()
 	}
 	HapticClipAssetTypeActions.Reset();
 
+#if !UE_VERSION_OLDER_THAN(5, 0, 0)
 	if (Style.IsValid())
 	{
 		FSlateStyleRegistry::UnRegisterSlateStyle(Style->GetStyleSetName());
 		Style.Reset();
 	}
+#endif
 }
 
+#if !UE_VERSION_OLDER_THAN(5, 0, 0)
 void FMetaXRHapticsEditorModule::SetupStyle()
 {
 	const FString PluginBaseDir = IPluginManager::Get().FindPlugin("MetaXRHaptics")->GetBaseDir();
@@ -69,6 +74,7 @@ void FMetaXRHapticsEditorModule::SetupStyle()
 	FSlateImageBrush* SlateImageBrush = new FSlateImageBrush(IconPath, Icon128x128);
 	Style->Set("ClassThumbnail.MetaXRHapticClip", SlateImageBrush);
 }
+#endif
 
 #undef LOCTEXT_NAMESPACE
 

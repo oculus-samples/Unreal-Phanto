@@ -19,12 +19,36 @@
  */
 
 #include "MetaXRHaptics.h"
+#include "MetaXRHapticsOpenXRExtension.h"
 #include "Interfaces/IPluginManager.h"
+#include "OpenXRCore.h"
 #include "Misc/Paths.h"
 
 METAXRHAPTICS_API DEFINE_LOG_CATEGORY(LogHapticsSDK);
 
 #define LOCTEXT_NAMESPACE "FMetaXRHapticsModule"
+
+void NativeSdkLogCallback(HapticsSdkLogLevel Level, const char* Message)
+{
+	switch (Level)
+	{
+		case HAPTICS_SDK_LOG_LEVEL_TRACE:
+			UE_LOG(LogHapticsSDK, Verbose, TEXT("%s"), UTF8_TO_TCHAR(Message));
+			break;
+		case HAPTICS_SDK_LOG_LEVEL_DEBUG:
+			UE_LOG(LogHapticsSDK, Log, TEXT("%s"), UTF8_TO_TCHAR(Message));
+			break;
+		case HAPTICS_SDK_LOG_LEVEL_INFO:
+			UE_LOG(LogHapticsSDK, Display, TEXT("%s"), UTF8_TO_TCHAR(Message));
+			break;
+		case HAPTICS_SDK_LOG_LEVEL_WARN:
+			UE_LOG(LogHapticsSDK, Warning, TEXT("%s"), UTF8_TO_TCHAR(Message));
+			break;
+		case HAPTICS_SDK_LOG_LEVEL_ERROR:
+			UE_LOG(LogHapticsSDK, Error, TEXT("%s"), UTF8_TO_TCHAR(Message));
+			break;
+	}
+}
 
 template <typename Func>
 Func FMetaXRHapticsModule::LoadFunction(const FString& Name)
@@ -44,6 +68,10 @@ Func FMetaXRHapticsModule::LoadFunction(const FString& Name)
 	return func;
 }
 
+FMetaXRHapticsModule::FMetaXRHapticsModule() = default;
+
+FMetaXRHapticsModule::~FMetaXRHapticsModule() = default;
+
 FMetaXRHapticsModule* FMetaXRHapticsModule::GetIfLibraryLoaded()
 {
 	if (!FModuleManager::Get().IsModuleLoaded("MetaXRHaptics"))
@@ -59,6 +87,11 @@ FMetaXRHapticsModule* FMetaXRHapticsModule::GetIfLibraryLoaded()
 	}
 
 	return MetaHapticsModule;
+}
+
+FMetaXRHapticsOpenXRExtension* FMetaXRHapticsModule::GetOpenXRExtension() const
+{
+	return OpenXRExtension.Get();
 }
 
 void FMetaXRHapticsModule::StartupModule()
@@ -87,6 +120,7 @@ void FMetaXRHapticsModule::StartupModule()
 	}
 
 	HapticsSDKVersion = LoadFunction<HapticsSdkVersionPtr>("haptics_sdk_version");
+	HapticsSDKInitializeLogging = LoadFunction<HapticsSdkInitializeLoggingPtr>("haptics_sdk_initialize_logging");
 	HapticsSDKInitializeWithNullBackend = LoadFunction<HapticsSdkInitializeWithNullBackendPtr>(
 		"haptics_sdk_initialize_with_null_backend");
 	HapticsSDKUninitialize = LoadFunction<HapticsSdkUninitializePtr>("haptics_sdk_uninitialize");
@@ -98,7 +132,10 @@ void FMetaXRHapticsModule::StartupModule()
 	HapticsSDKReleasePlayer = LoadFunction<HapticsSdkReleasePlayerPtr>("haptics_sdk_release_player");
 	HapticsSDKPlayerSetClip = LoadFunction<HapticsSdkPlayerSetClipPtr>("haptics_sdk_player_set_clip");
 	HapticsSDKPlayerPlay = LoadFunction<HapticsSdkPlayerPlayPtr>("haptics_sdk_player_play");
+	HapticsSDKPlayerPause = LoadFunction<HapticsSdkPlayerPausePtr>("haptics_sdk_player_pause");
+	HapticsSDKPlayerResume = LoadFunction<HapticsSdkPlayerResumePtr>("haptics_sdk_player_resume");
 	HapticsSDKPlayerStop = LoadFunction<HapticsSdkPlayerStopPtr>("haptics_sdk_player_stop");
+	HapticsSdkPlayerSeek = LoadFunction<HapticsSdkPlayerSeekPtr>("haptics_sdk_player_seek");
 	HapticsSDKPlayerSetAmplitude =
 		LoadFunction<HapticsSdkPlayerSetAmplitudePtr>("haptics_sdk_player_set_amplitude");
 	HapticsSDKPlayerAmplitude =
@@ -121,20 +158,44 @@ void FMetaXRHapticsModule::StartupModule()
 	HapticsSDKSetSuspended = LoadFunction<HapticsSdkSetSuspendedPtr>("haptics_sdk_set_suspended");
 	HapticsSDKSuspended = LoadFunction<HapticsSdkSuspendedPtr>("haptics_sdk_suspended");
 	HapticsSdkNullBackendStats = LoadFunction<HapticsSdkNullBackendStatsPtr>("haptics_sdk_get_null_backend_statistics");
+	HapticsSDKGetOpenXrExtensionCount = LoadFunction<HapticsSdkGetOpenXrExtensionCountPtr>("haptics_sdk_get_openxr_extension_count");
+	HapticsSDKGetOpenXrExtension = LoadFunction<HapticsSdkGetOpenXrExtensionPtr>("haptics_sdk_get_openxr_extension");
+	HapticsSDKInitializeWithOpenXr = LoadFunction<HapticsSDKInitializeWithOpenXrPtr>("haptics_sdk_initialize_with_openxr_from_game_engine");
+	HapticsSDKSetOpenXrSession = LoadFunction<HapticsSdkSetOpenXrSessionPtr>("haptics_sdk_set_openxr_session");
+	HapticsSDKSetOpenXrActionSet = LoadFunction<HapticsSdkSetOpenXrActionSetPtr>("haptics_sdk_set_openxr_action_set");
+	HapticsSDKCreateOpenXrActionSet = LoadFunction<HapticsSdkCreateOpenXrActionSetPtr>("haptics_sdk_create_openxr_action_set");
+	HapticsSDKDestroyOpenXrActionSet = LoadFunction<HapticsSdkDestroyOpenXrActionSetPtr>("haptics_sdk_destroy_openxr_action_set");
+	HapticsSDKGetOpenXrSuggestedBindingCount = LoadFunction<HapticsSdkGetOpenXrSuggestedBindingCountPtr>("haptics_sdk_get_openxr_suggested_binding_count");
+	HapticsSDKGetOpenXrSuggestedBinding = LoadFunction<HapticsSdkGetOpenXrSuggestedBindingPtr>("haptics_sdk_get_openxr_suggested_binding");
+	HapticsSDKSetOpenXrSessionState = LoadFunction<HapticsSdkSetOpenXrSessionStatePtr>("haptics_sdk_set_openxr_session_state");
+
+	if (HapticsSDKInitializeLogging)
+	{
+		HapticsSDKInitializeLogging(NativeSdkLogCallback);
+	}
+
+	// We create the FMetaXRHapticsOpenXRExtension here and not in UMetaXRHapticsGameInstanceSubsystem.
+	// This is because it is needed earlier, Unreal calls FMetaXRHapticsOpenXRExtension::PostCreateInstance() early during startup.
+	// If we were to create FMetaXRHapticsOpenXRExtension in UMetaXRHapticsGameInstanceSubsystem, we would miss that call to
+	// PostCreateInstance() as it would be too late.
+	// This is also the reason why the LoadingPhase in MetaXRHaptics.uplugin is "PostConfigInit" - anything later would be too
+	// late.
+	OpenXRExtension.Reset(new FMetaXRHapticsOpenXRExtension());
 }
 
 void FMetaXRHapticsModule::ShutdownModule()
 {
-	if (HapticsSDKLibraryHandle == nullptr)
+	OpenXRExtension.Reset();
+
+	if (HapticsSDKLibraryHandle != nullptr)
 	{
-		return;
+		FPlatformProcess::FreeDllHandle(HapticsSDKLibraryHandle);
+		UE_LOG(LogHapticsSDK, Log, TEXT("Released native library"));
+		HapticsSDKLibraryHandle = nullptr;
 	}
 
-	FPlatformProcess::FreeDllHandle(HapticsSDKLibraryHandle);
-	UE_LOG(LogHapticsSDK, Log, TEXT("Released native library"));
-	HapticsSDKLibraryHandle = nullptr;
-
 	HapticsSDKVersion = nullptr;
+	HapticsSDKInitializeLogging = nullptr;
 	HapticsSDKInitializeWithNullBackend = nullptr;
 	HapticsSDKUninitialize = nullptr;
 	HapticsSDKInitialized = nullptr;
@@ -145,7 +206,10 @@ void FMetaXRHapticsModule::ShutdownModule()
 	HapticsSDKReleasePlayer = nullptr;
 	HapticsSDKPlayerSetClip = nullptr;
 	HapticsSDKPlayerPlay = nullptr;
+	HapticsSDKPlayerPause = nullptr;
+	HapticsSDKPlayerResume = nullptr;
 	HapticsSDKPlayerStop = nullptr;
+	HapticsSdkPlayerSeek = nullptr;
 	HapticsSDKPlayerSetAmplitude = nullptr;
 	HapticsSDKPlayerAmplitude = nullptr;
 	HapticsSDKPlayerSetFrequencyShift = nullptr;
@@ -159,6 +223,16 @@ void FMetaXRHapticsModule::ShutdownModule()
 	HapticsSDKSetSuspended = nullptr;
 	HapticsSDKSuspended = nullptr;
 	HapticsSdkNullBackendStats = nullptr;
+	HapticsSDKGetOpenXrExtensionCount = nullptr;
+	HapticsSDKGetOpenXrExtension = nullptr;
+	HapticsSDKInitializeWithOpenXr = nullptr;
+	HapticsSDKSetOpenXrSession = nullptr;
+	HapticsSDKSetOpenXrActionSet = nullptr;
+	HapticsSDKCreateOpenXrActionSet = nullptr;
+	HapticsSDKDestroyOpenXrActionSet = nullptr;
+	HapticsSDKGetOpenXrSuggestedBindingCount = nullptr;
+	HapticsSDKGetOpenXrSuggestedBinding = nullptr;
+	HapticsSDKSetOpenXrSessionState = nullptr;
 }
 
 #undef LOCTEXT_NAMESPACE

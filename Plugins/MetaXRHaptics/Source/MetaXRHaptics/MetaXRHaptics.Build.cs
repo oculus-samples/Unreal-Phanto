@@ -30,6 +30,13 @@ public class MetaXRHaptics : ModuleRules
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
         PrivateDependencyModuleNames.AddRange(new string[] { "Projects" });
 
+        // OpenXRHMD is needed for openxr.h and for IOpenXRExtensionPlugin.h
+        PublicIncludePathModuleNames.AddRange(new string[] { "OpenXRHMD" });
+
+        // IOpenXRExtensionPlugin.h includes ARTypes.h, so AugmentedReality is needed as well. Some build configurations
+        // don't seem to include this automatically.
+        PublicIncludePathModuleNames.AddRange(new string[] { "AugmentedReality" });
+
         PublicIncludePaths.AddRange(new string[] { Path.Combine(ModuleDirectory, "../ThirdParty/include") });
 
         if (Target.Platform == UnrealTargetPlatform.Win64)

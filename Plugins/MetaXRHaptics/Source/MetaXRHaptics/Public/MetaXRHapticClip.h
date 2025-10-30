@@ -23,12 +23,20 @@
 #include "CoreMinimal.h"
 #include "MetaXRHapticClip.generated.h"
 
+/**
+ * This helper class allows the creation of HapticClip.uasset files by dragging and dropping a .haptic file in the editor.
+ * Developers do not need to interact with this class directly.
+ * Assign the created asset to a UMetaXRHapticsPlayerComponent to play it.
+ */
 UCLASS(BlueprintType)
 class METAXRHAPTICS_API UMetaXRHapticClip : public UObject
 {
 	GENERATED_BODY()
 
 public:
+	/**
+	 * Data from the imported .haptic file.
+	 */
 	UPROPERTY()
 	TArray<uint8> ClipData;
 };

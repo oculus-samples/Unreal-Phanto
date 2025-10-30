@@ -9,6 +9,9 @@ public class Phanto : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "NavigationSystem", "OculusXRHMD", "OculusXRScene", "OculusXRAnchors", "AIModule" });
+        
+        // Required for OpenXR support
+        PublicIncludePathModuleNames.AddRange(new string[] { "OpenXRHMD" });
 
         PrivateIncludePaths.Add($"{GetModuleDirectory("OculusXRScene")}/Public");
         PrivateIncludePaths.Add($"{GetModuleDirectory("OculusXRAnchors")}/Public");

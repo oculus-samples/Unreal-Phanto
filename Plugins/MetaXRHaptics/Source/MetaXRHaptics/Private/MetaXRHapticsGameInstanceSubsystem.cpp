@@ -20,31 +20,11 @@
 
 #include "MetaXRHapticsGameInstanceSubsystem.h"
 #include "MetaXRHaptics.h"
+#include "MetaXRHapticsOpenXRExtension.h"
 #include "Misc/CoreDelegates.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Interfaces/IPluginManager.h"
 #include "Misc/AutomationTest.h"
-
-void NativeSdkLogCallback(HapticsSdkLogLevel Level, const char* Message)
-{
-	switch (Level)
-	{
-		case HAPTICS_SDK_LOG_LEVEL_TRACE:
-			UE_LOG(LogHapticsSDK, Verbose, TEXT("%s"), UTF8_TO_TCHAR(Message));
-			break;
-		case HAPTICS_SDK_LOG_LEVEL_DEBUG:
-			UE_LOG(LogHapticsSDK, Log, TEXT("%s"), UTF8_TO_TCHAR(Message));
-			break;
-		case HAPTICS_SDK_LOG_LEVEL_INFO:
-			UE_LOG(LogHapticsSDK, Display, TEXT("%s"), UTF8_TO_TCHAR(Message));
-			break;
-		case HAPTICS_SDK_LOG_LEVEL_WARN:
-			UE_LOG(LogHapticsSDK, Warning, TEXT("%s"), UTF8_TO_TCHAR(Message));
-			break;
-		case HAPTICS_SDK_LOG_LEVEL_ERROR:
-			UE_LOG(LogHapticsSDK, Error, TEXT("%s"), UTF8_TO_TCHAR(Message));
-			break;
-	}
-}
 
 void UMetaXRHapticsGameInstanceSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -54,21 +34,48 @@ void UMetaXRHapticsGameInstanceSubsystem::Initialize(FSubsystemCollectionBase& C
 		return;
 	}
 
+	UE_LOG(LogHapticsSDK, Log, TEXT("Initializing Native SDK"));
+
 #if WITH_DEV_AUTOMATION_TESTS && !UE_BUILD_SHIPPING
 	if (FAutomationTestFramework::GetInstance().GetCurrentTest())
 	{
-		UE_LOG(LogHapticsSDK, Log, TEXT("Initalizing Haptics SDK with null backend"));
-		HapticsModule->HapticsSDKInitializeWithNullBackend(NativeSdkLogCallback);
+		UE_LOG(LogHapticsSDK, Log, TEXT("Using null backend"));
+		HapticsModule->HapticsSDKInitializeWithNullBackend();
 		return;
 	}
 #endif
 
-	UE_LOG(LogHapticsSDK, Log, TEXT("Initializing Haptics SDK"));
-	HapticsModule->HapticsSDKInitializeWithOvrPlugin(
-		"UnrealEngine",
-		TCHAR_TO_ANSI(*UKismetSystemLibrary::GetEngineVersion()),
-		"63.0.0",
-		NativeSdkLogCallback);
+	const char* const GameEngine = "UnrealEngine";
+	const FString UnrealVersion = UKismetSystemLibrary::GetEngineVersion();
+	FString SdkVersion;
+
+	const TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(TEXT("MetaXRHaptics"));
+	if (Plugin.IsValid())
+	{
+		SdkVersion = Plugin->GetDescriptor().VersionName;
+	}
+	else
+	{
+		UE_LOG(LogHapticsSDK, Error, TEXT("Fail to get SDK version name"));
+	}
+	const auto OpenXRExtension = HapticsModule->GetOpenXRExtension();
+	if (OpenXRExtension && OpenXRExtension->IsOpenXRPluginUsed())
+	{
+		ensure(FModuleManager::Get().IsModuleLoaded("OpenXRHMD"));
+		UE_LOG(LogHapticsSDK, Log, TEXT("Using OpenXR backend"));
+
+		HapticsModule->HapticsSDKInitializeWithOpenXr(OpenXRExtension->GetOpenXRInstance(),
+			GameEngine, TCHAR_TO_ANSI(*UnrealVersion), TCHAR_TO_ANSI(*SdkVersion));
+		OpenXRExtension->SetupActionSet();
+	}
+	else
+	{
+		ensure(FModuleManager::Get().IsModuleLoaded("OculusXRHMD"));
+		UE_LOG(LogHapticsSDK, Log, TEXT("Using OVRPlugin backend"));
+
+		HapticsModule->HapticsSDKInitializeWithOvrPlugin(
+			GameEngine, TCHAR_TO_ANSI(*UnrealVersion), TCHAR_TO_ANSI(*SdkVersion));
+	}
 
 #if !WITH_EDITOR
 	HeadsetRemovedHandle = FCoreDelegates::VRHeadsetRemovedFromHead.AddStatic(&OnHeadsetRemoved);
@@ -84,8 +91,13 @@ void UMetaXRHapticsGameInstanceSubsystem::Deinitialize()
 		return;
 	}
 
-	UE_LOG(LogHapticsSDK, Log, TEXT("Uninitializing Haptics SDK"));
+	if (HapticsModule->GetOpenXRExtension())
+	{
+		HapticsModule->GetOpenXRExtension()->DestroyActionSet();
+	}
+	UE_LOG(LogHapticsSDK, Log, TEXT("Uninitializing Native SDK"));
 	HapticsModule->HapticsSDKUninitialize();
+
 #if !WITH_EDITOR
 	FCoreDelegates::VRHeadsetRemovedFromHead.Remove(HeadsetRemovedHandle);
 	FCoreDelegates::VRHeadsetPutOnHead.Remove(HeadsetPutOnHandle);

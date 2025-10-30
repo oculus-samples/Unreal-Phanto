@@ -22,10 +22,12 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "MetaXRHapticsPlayerComponent.h"
 #include "MetaXRHapticsFunctionLibrary.generated.h"
 
-class UMetaXRHapticsPlayerComponent;
-
+/**
+ * Blueprint function library with helper functions.
+ */
 UCLASS()
 class METAXRHAPTICS_API UMetaXRHapticsFunctionLibrary : public UBlueprintFunctionLibrary
 {
@@ -35,20 +37,20 @@ public:
 	/**
 	 * Spawns a UMetaXRHapticsPlayerComponent and attaches it to an Actor.
 	 *
-	 * Always spawn new player components with this method, Unreal's built-in "Add Haptics SDK Player"
+	 * Always spawn new player components using this method. It is a known issue that Unreal's built-in "Add Haptics SDK Player"
 	 * will lead to initialization errors.
 	 *
 	 * When playback finishes, the component will *not* automatically destroy itself.
 	 *
-	 * @param ActorToAttachTo Actor to which this component will be attached to.
+	 * @param ActorToAttachTo Actor to which this component will be attached.
 	 * @param HapticClip Haptic clip to load.
 	 * @param Controller Controller used to play haptics.
 	 * @param Priority Playback priority, ranging from 0 (low priority) to 1024 (high priority).
-	 * @param Amplitude Amplitude scale, ranging from 0.0 to infinite.
+	 * @param Amplitude Amplitude scale, ranging from 0.0 to infinity.
 	 * @param FrequencyShift Frequency shift, ranging from -1.0 to 1.0.
 	 * @param bIsLooping Whether playback should loop.
 	 *
-	 * @return A UMetaXRHapticsPlayerComponent that plays back the haptic clip, and can be used to
+	 * @return A UMetaXRHapticsPlayerComponent that plays back the haptic clip and can be used to
 	 *         control playback.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "MetaXR|Haptics", meta = (AdvancedDisplay = "3"))

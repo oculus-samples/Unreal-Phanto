@@ -26,7 +26,10 @@
 
 METAXRHAPTICS_API DECLARE_LOG_CATEGORY_EXTERN(LogHapticsSDK, Log, All);
 
+class FMetaXRHapticsOpenXRExtension;
+
 using HapticsSdkVersionPtr = decltype(haptics_sdk_version)*;
+using HapticsSdkInitializeLoggingPtr = decltype(haptics_sdk_initialize_logging)*;
 using HapticsSdkInitializeWithNullBackendPtr = decltype(haptics_sdk_initialize_with_null_backend)*;
 using HapticsSdkUninitializePtr = decltype(haptics_sdk_uninitialize)*;
 using HapticsSdkInitializedPtr = decltype(haptics_sdk_initialized)*;
@@ -37,7 +40,10 @@ using HapticsSdkCreatePlayerPtr = decltype(haptics_sdk_create_player)*;
 using HapticsSdkReleasePlayerPtr = decltype(haptics_sdk_release_player)*;
 using HapticsSdkPlayerSetClipPtr = decltype(haptics_sdk_player_set_clip)*;
 using HapticsSdkPlayerPlayPtr = decltype(haptics_sdk_player_play)*;
+using HapticsSdkPlayerPausePtr = decltype(haptics_sdk_player_pause)*;
+using HapticsSdkPlayerResumePtr = decltype(haptics_sdk_player_resume)*;
 using HapticsSdkPlayerStopPtr = decltype(haptics_sdk_player_stop)*;
+using HapticsSdkPlayerSeekPtr = decltype(haptics_sdk_player_seek)*;
 using HapticsSdkPlayerSetAmplitudePtr = decltype(haptics_sdk_player_set_amplitude)*;
 using HapticsSdkPlayerAmplitudePtr = decltype(haptics_sdk_player_amplitude)*;
 using HapticsSdkPlayerSetFrequencyShiftPtr = decltype(haptics_sdk_player_set_frequency_shift)*;
@@ -51,6 +57,16 @@ using HapticsSdkInitializeWithOvrPluginPtr = decltype(haptics_sdk_initialize_wit
 using HapticsSdkSetSuspendedPtr = decltype(haptics_sdk_set_suspended)*;
 using HapticsSdkSuspendedPtr = decltype(haptics_sdk_suspended)*;
 using HapticsSdkNullBackendStatsPtr = decltype(haptics_sdk_get_null_backend_statistics)*;
+using HapticsSdkGetOpenXrExtensionCountPtr = decltype(haptics_sdk_get_openxr_extension_count)*;
+using HapticsSdkGetOpenXrExtensionPtr = decltype(haptics_sdk_get_openxr_extension)*;
+using HapticsSDKInitializeWithOpenXrPtr = decltype(haptics_sdk_initialize_with_openxr_from_game_engine)*;
+using HapticsSdkSetOpenXrSessionPtr = decltype(haptics_sdk_set_openxr_session)*;
+using HapticsSdkSetOpenXrActionSetPtr = decltype(haptics_sdk_set_openxr_action_set)*;
+using HapticsSdkCreateOpenXrActionSetPtr = decltype(haptics_sdk_create_openxr_action_set)*;
+using HapticsSdkDestroyOpenXrActionSetPtr = decltype(haptics_sdk_destroy_openxr_action_set)*;
+using HapticsSdkGetOpenXrSuggestedBindingCountPtr = decltype(haptics_sdk_get_openxr_suggested_binding_count)*;
+using HapticsSdkGetOpenXrSuggestedBindingPtr = decltype(haptics_sdk_get_openxr_suggested_binding)*;
+using HapticsSdkSetOpenXrSessionStatePtr = decltype(haptics_sdk_set_openxr_session_state)*;
 
 /**
  * The haptics module is responsible for loading the native library (haptics_sdk.dll or
@@ -61,6 +77,9 @@ using HapticsSdkNullBackendStatsPtr = decltype(haptics_sdk_get_null_backend_stat
 class METAXRHAPTICS_API FMetaXRHapticsModule : public IModuleInterface
 {
 public:
+	FMetaXRHapticsModule();
+	~FMetaXRHapticsModule();
+
 	/**
 	 * Returns the module, loading it on demand if needed.
 	 */
@@ -76,11 +95,14 @@ public:
 	 */
 	static FMetaXRHapticsModule* GetIfLibraryLoaded();
 
+	FMetaXRHapticsOpenXRExtension* GetOpenXRExtension() const;
+
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 
 	HapticsSdkVersionPtr HapticsSDKVersion = nullptr;
+	HapticsSdkInitializeLoggingPtr HapticsSDKInitializeLogging = nullptr;
 	HapticsSdkInitializeWithNullBackendPtr HapticsSDKInitializeWithNullBackend = nullptr;
 	HapticsSdkUninitializePtr HapticsSDKUninitialize = nullptr;
 	HapticsSdkInitializedPtr HapticsSDKInitialized = nullptr;
@@ -91,7 +113,10 @@ public:
 	HapticsSdkReleasePlayerPtr HapticsSDKReleasePlayer = nullptr;
 	HapticsSdkPlayerSetClipPtr HapticsSDKPlayerSetClip = nullptr;
 	HapticsSdkPlayerPlayPtr HapticsSDKPlayerPlay = nullptr;
+	HapticsSdkPlayerPausePtr HapticsSDKPlayerPause = nullptr;
+	HapticsSdkPlayerResumePtr HapticsSDKPlayerResume = nullptr;
 	HapticsSdkPlayerStopPtr HapticsSDKPlayerStop = nullptr;
+	HapticsSdkPlayerSeekPtr HapticsSdkPlayerSeek = nullptr;
 	HapticsSdkPlayerSetAmplitudePtr HapticsSDKPlayerSetAmplitude = nullptr;
 	HapticsSdkPlayerAmplitudePtr HapticsSDKPlayerAmplitude = nullptr;
 	HapticsSdkPlayerSetFrequencyShiftPtr HapticsSDKPlayerSetFrequencyShift = nullptr;
@@ -105,10 +130,22 @@ public:
 	HapticsSdkSetSuspendedPtr HapticsSDKSetSuspended = nullptr;
 	HapticsSdkSuspendedPtr HapticsSDKSuspended = nullptr;
 	HapticsSdkNullBackendStatsPtr HapticsSdkNullBackendStats = nullptr;
+	HapticsSdkGetOpenXrExtensionCountPtr HapticsSDKGetOpenXrExtensionCount = nullptr;
+	HapticsSdkGetOpenXrExtensionPtr HapticsSDKGetOpenXrExtension = nullptr;
+	HapticsSDKInitializeWithOpenXrPtr HapticsSDKInitializeWithOpenXr = nullptr;
+	HapticsSdkSetOpenXrSessionPtr HapticsSDKSetOpenXrSession = nullptr;
+	HapticsSdkSetOpenXrActionSetPtr HapticsSDKSetOpenXrActionSet = nullptr;
+	HapticsSdkCreateOpenXrActionSetPtr HapticsSDKCreateOpenXrActionSet = nullptr;
+	HapticsSdkDestroyOpenXrActionSetPtr HapticsSDKDestroyOpenXrActionSet = nullptr;
+	HapticsSdkGetOpenXrSuggestedBindingCountPtr HapticsSDKGetOpenXrSuggestedBindingCount = nullptr;
+	HapticsSdkGetOpenXrSuggestedBindingPtr HapticsSDKGetOpenXrSuggestedBinding = nullptr;
+	HapticsSdkSetOpenXrSessionStatePtr HapticsSDKSetOpenXrSessionState = nullptr;
 
 private:
 	/** Handle to Haptics Native SDK library */
 	void* HapticsSDKLibraryHandle = nullptr;
+
+	TUniquePtr<FMetaXRHapticsOpenXRExtension> OpenXRExtension;
 
 	template <typename Func>
 	Func LoadFunction(const FString& Name);

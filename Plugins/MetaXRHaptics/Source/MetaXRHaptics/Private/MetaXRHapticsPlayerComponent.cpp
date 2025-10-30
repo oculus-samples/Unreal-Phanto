@@ -35,7 +35,6 @@ void UMetaXRHapticsPlayerComponent::Play()
 
 void UMetaXRHapticsPlayerComponent::PlayOnController(const EMetaXRHapticController InController)
 {
-
 #if WITH_DEV_AUTOMATION_TESTS && !UE_BUILD_SHIPPING
 	if (!FAutomationTestFramework::GetInstance().GetCurrentTest())
 	{
@@ -62,6 +61,26 @@ void UMetaXRHapticsPlayerComponent::PlayWithInputs(const EMetaXRHapticController
 	Play();
 }
 
+void UMetaXRHapticsPlayerComponent::Pause()
+{
+	if (HapticsModule == nullptr || PlayerID == HAPTICS_SDK_INVALID_ID || ClipID == HAPTICS_SDK_INVALID_ID)
+	{
+		return;
+	}
+
+	HapticsModule->HapticsSDKPlayerPause(PlayerID);
+}
+
+void UMetaXRHapticsPlayerComponent::Resume()
+{
+	if (HapticsModule == nullptr || PlayerID == HAPTICS_SDK_INVALID_ID || ClipID == HAPTICS_SDK_INVALID_ID)
+	{
+		return;
+	}
+
+	HapticsModule->HapticsSDKPlayerResume(PlayerID);
+}
+
 void UMetaXRHapticsPlayerComponent::Stop()
 {
 	if (HapticsModule == nullptr || PlayerID == HAPTICS_SDK_INVALID_ID || ClipID == HAPTICS_SDK_INVALID_ID)
@@ -70,6 +89,16 @@ void UMetaXRHapticsPlayerComponent::Stop()
 	}
 
 	HapticsModule->HapticsSDKPlayerStop(PlayerID);
+}
+
+void UMetaXRHapticsPlayerComponent::Seek(const float Time) const
+{
+	if (HapticsModule == nullptr || PlayerID == HAPTICS_SDK_INVALID_ID || ClipID == HAPTICS_SDK_INVALID_ID)
+	{
+		return;
+	}
+
+	HapticsModule->HapticsSdkPlayerSeek(PlayerID, Time);
 }
 
 UMetaXRHapticClip* UMetaXRHapticsPlayerComponent::GetHapticClip() const

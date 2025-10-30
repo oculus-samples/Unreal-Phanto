@@ -72,6 +72,7 @@ The following components are licensed under the Apache License 2.0 OR the MIT Li
 - ucd-trie, Copyright Andrew Gallant <jamslam@gmail.com>, https://github.com/BurntSushi/ucd-generate
 - winapi, Copyright Peter Atashian <retep998@gmail.com>, https://github.com/retep998/winapi-rs
 - windows-sys, Copyright Microsoft, https://github.com/microsoft/windows-rs
+- windows-targets, Copyright Microsoft, https://github.com/microsoft/windows-rs
 - windows_x86_64_msvc, Copyright Microsoft, https://github.com/microsoft/windows-rs
 
 The following components are licensed under the ISC license reproduced below:
