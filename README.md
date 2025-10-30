@@ -5,7 +5,7 @@
 # Project overview
 
 Project Phanto is an Unreal reference app, showcasing the latest Presence Platform
-features, highlighting scene mesh, Scene Model, and Scene API objects. It was developed using [the Meta fork of Unreal Engine 5.3](#meta-fork).
+features, highlighting scene mesh, Scene Model, and Scene API objects. It was developed using [the Meta fork of Unreal Engine 5.5](#meta-fork).
 
 The
 [scene mesh](https://developer.oculus.com/documentation/unreal/unreal-scene-mesh/)
@@ -72,13 +72,13 @@ The Meta fork of Epic’s Unreal Engine will give you the most up to date integr
     - authorization to access the Unreal Engine source repository
 
     Disregard instructions on downloading Epic’s Unreal Engine source code as you will be building the Meta fork of Epic’s Unreal Engine source.
-1. Make sure you have Visual Studio installed properly:
+2. Make sure you have Visual Studio installed properly:
     - Launch the Visual Studio Installer and click Modify for the Visual Studio version you want to use.
     - Under the Workloads tab, click Game development with C++ if it isn’t checked and then click Modify.
-1. Download the source code from the [Meta fork of Epic’s Unreal Engine on GitHub](https://github.com/Oculus-VR/UnrealEngine).
-1. Follow Epic’s instructions on [Building Unreal Engine from Source](https://docs.unrealengine.com/5.3/en-US/building-unreal-engine-from-source/) to complete the process.
+3. Download the source code from the [Meta fork of Epic’s Unreal Engine on GitHub](https://github.com/Oculus-VR/UnrealEngine/tree/oculus-5.5).
+4. Follow Epic’s instructions on [Building Unreal Engine from Source](https://docs.unrealengine.com/5.3/en-US/building-unreal-engine-from-source/) to complete the process.
     Depending on your machine, the build may take awhile to complete.
-1. Open a command prompt in the root of the Unreal repo, then run this command:
+5. Open a command prompt in the root of the Unreal repo, then run this command:
     ```sh
     .\GenerateProjectFiles.bat -Game Phanto -Engine <full path to Unreal-Phanto directory>\Phanto.uproject
     ```
@@ -103,8 +103,8 @@ Build, deploy, and run the game on your headset.
 <p>
 
 1. Open the Oculus app.
-1. Run Oculus Link from the headset.
-1. Run the game in Unreal using the **VR Preview** button.
+2. Run Oculus Link from the headset.
+3. Run the game in Unreal using the **VR Preview** button.
 
 **\*NOTE**: Scene mesh and room elements will show up in Link. However, you can
 only trigger room scan from within the headset. Please do it beforehand.\*
@@ -118,7 +118,7 @@ only trigger room scan from within the headset. Please do it beforehand.\*
 1. Enable
 [XR Simulator](https://developer.oculus.com/documentation/unreal/xrsim-intro/),
 and press **Play**.
-1. Run the game in Unreal using the **VR Preview** button.
+2. Run the game in Unreal using the **VR Preview** button.
 
 </p>
 </details>
