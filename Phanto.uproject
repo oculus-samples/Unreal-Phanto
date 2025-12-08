@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.3",
+	"EngineAssociation": "{9C589ED4-461B-43C3-7359-B487D9E7B1B0}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -35,7 +35,8 @@
 			"SupportedTargetPlatforms": [
 				"Win64",
 				"Android"
-			]
+			],
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/4fe0628096b34166b616f74c4ed974af"
 		}
 	],
 	"TargetPlatforms": [
