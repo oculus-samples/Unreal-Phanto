@@ -9,6 +9,7 @@ public class PhantoEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_6;
 
 		ExtraModuleNames.AddRange( new string[] { "Phanto" } );
 	}

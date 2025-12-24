@@ -2,192 +2,157 @@
 
 ![Phanto Banner](./Media/PhantoTitle.png 'Phanto')
 
-# Project overview
+# Project Overview
 
-Project Phanto is an Unreal reference app, showcasing the latest Presence Platform
-features, highlighting scene mesh, Scene Model, and Scene API objects. It was developed using [the Meta fork of Unreal Engine 5.5](#meta-fork).
+Project Phanto is an Unreal reference app demonstrating the latest Presence Platform features, including scene mesh, Scene Model, and Scene API objects. It uses [the Meta fork of Unreal Engine 5.6](#meta-fork).
 
-The
-[scene mesh](https://developer.oculus.com/documentation/unreal/unreal-scene-mesh/)
-is a low-fidelity, high-coverage artifact which describes the boundary between
-free and occupied space in a room. It is generated automatically during the
-Space Setup experience, and available for applications to query via Scene API.
+The [scene mesh](https://developers.meta.com/horizon/documentation/unreal/unreal-scene-mesh/) is a low-fidelity, high-coverage artifact that defines the boundary between free and occupied space in a room. It is generated automatically during the Space Setup experience and can be queried by applications via the Scene API.
 
 The haptic assets used in this project have been designed with [Haptics Studio](https://developer.oculus.com/documentation/unity/haptics-studio/), and were integrated using the [Haptics SDK for Unreal](https://developer.oculus.com/documentation/unreal/unreal-haptics-sdk) following our [Haptic Design Guidelines](https://developer.oculus.com/resources/haptics-design-guidelines/).
 
-## License
+## Build Instructions
 
-This codebase is available as both a reference and a template for mixed reality
-projects. The [Oculus SDK License](./LICENSE) applies to the SDK and supporting
-material. The MIT License applies to only certain, clearly marked documents. If
-an individual file does not indicate which license it is subject to, then the
-Oculus License applies.
+### Download the Project
 
-See the [CONTRIBUTING](./CONTRIBUTING.md) file for how to help out.
-
-## How to Use
-
-### Download the project
-
-First, ensure you have Git LFS installed by running this command:
+First, install Git LFS by running:
 
 ```sh
 git lfs install
 ```
 
-Then, clone this repo using the "Code" button above, or this command:
+Then clone this repository using the "Code" button above or this command:
 
 ```sh
 git clone https://github.com/oculus-samples/Unreal-Phanto
 ```
 
-### Launch the project in the Unreal Editor using one of the following options
+### Launch the Project in Unreal Editor
+
+Choose one of the following options:
 
 <details>
-  <summary><b>Epic Games Launcher with MetaXR plugin</b></summary>
+  <summary><b>Epic Games Launcher with MetaXR Plugin</b></summary>
 
 <p>
 
-The easiest way to get started is to use the prebuilt Unreal Engine from the Epic Games Launcher, with MetaXR plugin.
+The easiest way to start is using the prebuilt Unreal Engine from the Epic Games Launcher with the MetaXR plugin.
 
-1. Install the [Epic Games Launcher](https://www.epicgames.com/store/en-US/download)
-2. In the launcher, install UE5 (recommended).
-3. Download and install the MetaXR plugin from the [Unreal Engine 5 Integration download page](https://developer.oculus.com/downloads/package/unreal-engine-5-integration).
-4. Launch the Unreal Editor
-5. From "Recent Projects", click "Browse" and select `Phanto.uproject`
+1. Install the [Epic Games Launcher](https://store.epicgames.com/en-US/download).
+2. Install UE5 (recommended) via the launcher.
+3. Download and install the MetaXR v81 plugin from the [Unreal Engine 5 Integration download page](https://developers.meta.com/horizon/downloads/package/unreal-engine-5-integration/81.0).
+4. Launch the Unreal Editor.
+5. From "Recent Projects," click "Browse" and select `Phanto.uproject`.
 
 </p>
 </details>
+
 <a id="meta-fork"></a>
 <details>
-  <summary><b>Meta fork of Epic’s Unreal Engine</b></summary>
+  <summary><b>Meta Fork of Epic’s Unreal Engine</b></summary>
 
 <p>
 
-The Meta fork of Epic’s Unreal Engine will give you the most up to date integration of Oculus features. However, you must build the editor from its source.
+The Meta fork provides the latest Oculus features but requires building the editor from source.
 
-1. Follow the instructions on [Accessing Unreal Engine source code on GitHub](https://www.unrealengine.com/en-US/ue-on-github) to obtain:
+1. Follow [Accessing Unreal Engine source code on GitHub](https://www.unrealengine.com/en-US/ue-on-github) to get:
     - an Epic account
     - a GitHub account
     - authorization to access the Unreal Engine source repository
 
-    Disregard instructions on downloading Epic’s Unreal Engine source code as you will be building the Meta fork of Epic’s Unreal Engine source.
-2. Make sure you have Visual Studio installed properly:
-    - Launch the Visual Studio Installer and click Modify for the Visual Studio version you want to use.
-    - Under the Workloads tab, click Game development with C++ if it isn’t checked and then click Modify.
-3. Download the source code from the [Meta fork of Epic’s Unreal Engine on GitHub](https://github.com/Oculus-VR/UnrealEngine/tree/oculus-5.5).
-4. Follow Epic’s instructions on [Building Unreal Engine from Source](https://docs.unrealengine.com/5.3/en-US/building-unreal-engine-from-source/) to complete the process.
-    Depending on your machine, the build may take awhile to complete.
-5. Open a command prompt in the root of the Unreal repo, then run this command:
+    Ignore instructions for downloading Epic’s Unreal Engine source code; you will build the Meta fork instead.
+2. Ensure Visual Studio is installed with the "Game development with C++" workload.
+3. Download the source from the [Meta fork of Epic’s Unreal Engine on GitHub](https://github.com/Oculus-VR/UnrealEngine/tree/oculus-5.6).
+4. Follow Epic’s [Building Unreal Engine from Source](https://dev.epicgames.com/documentation/en-us/unreal-engine/building-unreal-engine-from-source?application_version=5.3) instructions. The build may take some time.
+5. In the Unreal repository root, run:
+
     ```sh
     .\GenerateProjectFiles.bat -Game Phanto -Engine <full path to Unreal-Phanto directory>\Phanto.uproject
     ```
+
 </p>
 </details>
 
-### Running the project
+### Running the Project
 
-There are three options for running the project.
+You can run the project using one of these methods:
 
 <details>
   <summary><b>Running on a Quest 3</b></summary>
 
 <p>
 
-Build, deploy, and run the game on your headset.
+Build, deploy, and run the game directly on your headset.
 </p>
 </details>
+
 <details>
   <summary><b>Running with Quest Link</b></summary>
 
 <p>
 
-1. Open the Oculus app.
-2. Run Oculus Link from the headset.
+1. Open the Meta Quest Link app.
+2. Enable Meta Quest Link from the headset.
 3. Run the game in Unreal using the **VR Preview** button.
 
-**\*NOTE**: Scene mesh and room elements will show up in Link. However, you can
-only trigger room scan from within the headset. Please do it beforehand.\*
+**Note:** Scene mesh and room elements appear in Link, but you can only trigger room scanning inside the headset. Please scan beforehand.
 </p>
 </details>
+
 <details>
   <summary><b>Running with XR Simulator</b></summary>
 
 <p>
 
-1. Enable
-[XR Simulator](https://developer.oculus.com/documentation/unreal/xrsim-intro/),
-and press **Play**.
+1. Enable [XR Simulator](https://developers.meta.com/horizon/documentation/unreal/xrsim-intro/) and press **Play**.
 2. Run the game in Unreal using the **VR Preview** button.
 
 </p>
 </details>
 
-## Using the project's scenes
+## License
 
-After opening the project, you will find three main scenes and nine example
-scenes:
+This codebase serves as a reference and template for mixed reality projects. The [Oculus SDK License](./LICENSE) applies to the SDK and supporting materials. The MIT License applies only to clearly marked documents. If a file lacks a license indication, the Oculus License applies.
 
-1. [LobbyScene.umap](./Content/Phanto/Maps/LobbyScene.umap): this
-   self-contained scene contains the introduction scene, showing the current
-   mesh, and allows the player to start the game.
-2. [TutorialScene.umap](./Content/Phanto/Maps/TutorialScene.umap): contains the
-   tutorial for the player, presenting the controls and game dynamics.
-3. [GameScene.umap](./Content/Phanto/Maps/GameScene.umap): this self-contained
-   scene contains the assets for the actual gameplay. This includes Phanto, the
-   Phantoms, and other assets.
+## Contribution
 
-# Health and safety guidelines
+See the [CONTRIBUTING](./CONTRIBUTING.md) file for contribution guidelines.
 
-When building mixed reality experiences, we highly recommend evaluating your
-content from a health and safety perspective to offer your users a comfortable
-and safe experience. Please read the
-[Mixed Reality H&S Guidelines](https://developer.oculus.com/resources/mr-health-safety-guideline/)
-before designing and developing your app using this sample project, or any of
-our Presence Platform features.
+## Using the Project's Scenes
 
-Developers should avoid improper occlusion, which occurs when virtual content
-does not respect the physicality of the user’s environment. Improper Occlusion
-can result in a misperception of actionable space.
+The project includes three main scenes and nine example scenes:
 
-- See
-  [Occlusions with Virtual Content](https://developer.oculus.com/resources/mr-health-safety-guideline/#passthrough)
+1. [LobbyScene.umap](./Content/Phanto/Maps/LobbyScene.umap): An introduction scene showing the current mesh and allowing the player to start the game.
+2. [TutorialScene.umap](./Content/Phanto/Maps/TutorialScene.umap): A tutorial presenting controls and game dynamics.
+3. [GameScene.umap](./Content/Phanto/Maps/GameScene.umap): Contains assets for gameplay, including Phanto, the Phantoms, and other elements.
 
-- To avoid improper occlusion, developers should ensure that users have (1)
-  completed Space Setup and (2) granted Spatial Data permission (setup design)
-  to allow proper occlusion in content placement, mesh collisions, and air
-  navigation.
+# Health and Safety Guidelines
 
-Using semi-transparent content lets the user have a better view of their
-physical space and reduces the occlusion of objects or people that are not part
-of the scanned mesh.
+Evaluate your mixed reality content for health and safety to ensure a comfortable user experience. Read the [Mixed Reality H&S Guidelines](https://developers.meta.com/horizon/design/mr-health-safety-guideline/) before designing or developing your app with this sample or any Presence Platform features.
 
-- Spatial data won’t incorporate dynamic elements of a user’s living space (for
-  example, a chair that was moved after capture or a moving person/pet in the
-  space).
+Avoid improper occlusion, which happens when virtual content ignores the physical environment. This can cause users to misjudge actionable space.
 
-- Uncaptured dynamic elements may be occluded by virtual content, making it more
-  difficult for a user to safely avoid such hazards while engaged in the mixed
-  reality experience.
+- See [Occlusions with Virtual Content](https://developers.meta.com/horizon/design/mr-health-passthrough).
+- To prevent improper occlusion, ensure users have (1) completed Space Setup and (2) granted Spatial Data permission. This enables proper occlusion in content placement, mesh collisions, and air navigation.
 
-# Design flow
+Using semi-transparent content improves users' view of their physical space and reduces occlusion of uncaptured objects or people.
 
-The following diagrams represent the game's main user flow.
+- Spatial data excludes dynamic elements like moved furniture or moving people/pets.
+- Uncaptured dynamic elements may be occluded by virtual content, increasing safety risks during mixed reality experiences.
 
-## Setup design
+# Design Flow
 
-Prior to starting the game, the setup flow will verify the user has:
+The diagrams below show the game's main user flow.
 
-- Completed **Space Setup** and has a Scene Model
-- Granted **Spatial Data** permission
-  ([implementation instructions](https://developer.oculus.com/documentation/unreal/unreal-spatial-data-perm/))
+## Setup Design
 
-Without these two requirements, the application can't function. Therefore, the
-user will only be able to advance to the next scene after complying with these
-requirements.
+Before starting, the setup flow verifies that the user has:
+
+- Completed **Space Setup** and has a Scene Model.
+- Granted **Spatial Data** permission ([implementation instructions](https://developers.meta.com/horizon/documentation/unreal/unreal-spatial-data-perm/)).
+
+Without these, the app cannot function. Users can only proceed after meeting these requirements.
 
 ```mermaid
-
 graph TD;
     Lobby-->SpaceSetup;
     SpaceSetup-->Lobby;
@@ -195,19 +160,15 @@ graph TD;
     Permission-->Lobby;
 ```
 
-When permission is denied, or if no Scene Model is present, the user will be
-presented with prompts that allow them to rescan their room and grant
-permissions.
+If permission is denied or no Scene Model exists, prompts will be presented to allow rescanning the room and granting permissions.
 
-|                      Missing scene prompt                       |                           Permission prompt                           |
+|                      Missing Scene Prompt                       |                           Permission Prompt                           |
 | :-------------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![RescanScene](./Media/NoSceneModel.png 'Missing scene prompt') | ![PermissionPrompt](./Media/PermissionPrompt.png 'Permission Prompt') |
 
-## Gameplay design
+## Gameplay Design
 
-The following diagram shows the high-level states for the player after they have
-fulfilled the requirements above. When launching the game for the first time,
-the player will go through a tutorial. Afterward, the tutorial can be skipped.
+After meeting setup requirements, the player follows this flow. The tutorial runs on first launch but can be skipped afterward.
 
 ```mermaid
 graph TD;
@@ -223,7 +184,7 @@ graph TD;
 
 # Device Compatibility
 
-| Device    | Scene API | Color Passthrough | High res color | Scene Mesh | Haptics<sup>[1](#HapticsQuality)</sup> |
+| Device    | Scene API | Color Passthrough | High Res color | Scene Mesh | Haptics<sup>[1](#HapticsQuality)</sup> |
 | :-------- | :-------: | :---------------: | :------------: | :--------: | :--------: |
 | Quest 3   |    ✔️     |        ✔️         |       ✔️       |     ✔️     |     ✔️     |
 | Quest Pro |    ✔️     |        ✔️         |       ❌       |     ❌     |     ✔️     |
@@ -235,106 +196,71 @@ and Quest 3 introduce TruTouch haptics, enabling a new level of immersion in
 your applications. For more information, visit our
 [Haptic Design Guidelines](https://developer.oculus.com/resources/haptics-design-guidelines/#meta-quest-platform-and-haptic-hardware-considerations).
 
-# Key components
+# Key Components
 
-The game demonstrates our recommended best practices when using the new scene
-mesh feature and updated Scene API.
+The game demonstrates best practices using the new scene mesh feature and updated Scene API.
 
 ## The Scene Mesh
 
-The scene mesh is provided in the project and is accessed using
-**PhantoSceneActor**. Each one of the maps will create a
-**PhantoSceneActor** and automatically load the mesh and room elements
-captured during the space setup flow. The scene mesh will be represented as a
-standard Unreal StaticMeshComponent and will respond to ray casts.
+The project accesses the scene mesh via **PhantoSceneActor**. Each map creates a **PhantoSceneActor** that loads the mesh and room elements captured during space setup. The mesh appears as a standard Unreal StaticMeshComponent and responds to ray casts.
 
-For more information on how to get started with scene mesh, visit
-[Meta Quest Developer Portal](https://developer.oculus.com/documentation/unreal/scene-best-practices/).
+For more details, visit the [Meta Quest Developer Portal](https://developers.meta.com/horizon/documentation/unreal/scene-best-practices/).
 
 ## The Ectofluid (Ghostly Goo)
 
-The Ectofluid is a ghostly goo, created both by Phanto and their Phantoms.
-Beware: once your room gets too covered with goo, you lose the game.
+Ectofluid is a ghostly goo created by Phanto and the Phantoms. If your room gets too covered, you lose the game.
 
-This element demonstrates the ability to place virtual content onto the physical
-environment represented by the scene mesh. With this new ability, content can be
-attached anywhere within the room reconstruction, adjusting itself to the real
-physical environment.
+This element shows how virtual content can attach to the physical environment via the scene mesh, adjusting to the real space.
 
 ## The Polterblast 3000
 
 ![Polterblast image](./Media/Hose.png 'Hose')
 
-This element demonstrates the use of the scene mesh as a physics component. This
-allows the fluid to collide with the mesh, and creates a splashing effect. We
-recommend using particles with fast collisions to create a more immersive
-experience.
+This demonstrates using the scene mesh as a physics component. The fluid collides with the mesh, creating splashes. Use fast-collision particles for a more immersive effect.
 
-- Use the Polterblast 3000 to throw Ectofluid and clean the ghostly goo from
-  your room.
-- Press the Right Trigger to throw Ectofluid
+- Use the Polterblast 3000 to throw Ectofluid and clean ghostly goo.
+- Press the Right Trigger to throw Ectofluid.
 
 ## Phanto and the Phantoms
 
 ![Phanto and Phantoms image](./Media/PhantoPhantoms.png 'Phanto and Phantoms')
 
-Watchout! Some Phantoms are appearing in your room. Use the Polterblast 3000
-(RT) and the Ecto Blaster (LT) to defeat all of them.
+Beware! Phantoms appear in your room. Use the Polterblast 3000 (RT) and Ecto Blaster (LT) to defeat them.
 
-- Phanto is an air-navigated NPC that uses the scene mesh as a sensor to figure
-  out available places, both to navigate to, and to spawn virtual elements onto
-  (Ectofluid).
-- The Phantoms are small, ground-navigated NPCs that use both the scene mesh and
-  the room capture data (chairs, couch, desk, windows, etc.) to navigate across
-  the environment, jump to targeted places, and spawn content (Ectofluid).
+- Phanto is an air-navigated NPC using the scene mesh as a sensor to find navigation and spawn points for Ectofluid.
+- Phantoms are ground-navigated NPCs using the scene mesh and room capture data (furniture, windows, etc.) to navigate, jump, and spawn Ectofluid.
 
 ## Ecto Blaster
 
 ![Blaster image](./Media/Blaster.png 'Blaster')
 
-The Ecto Blaster allows you to defeat the Phantoms. Place it in your room, and
-it will target and throw Ectofluid at them. To place the Ecto Blaster, point to
-any location in your room and press the Left Trigger. This element demonstrates
-the ability to trace and ray cast against the environment, using the scene mesh
-as a ray cast layer. This allows the user to create and place virtual content in
-mixed reality that responds to the scene.
+The Ecto Blaster defeats Phantoms. Point to a location and press the Left Trigger to place it. This shows how to trace and ray cast against the environment using the scene mesh as a ray cast layer, enabling virtual content placement that responds to the scene.
 
-# Main scenes
+# Main Scenes
 
 ## LobbyScene
 
-This scene functions as an introductory scene for the player. The player can
-view their scene, scan it, and change it. If no scene information is provided,
-the player will be guided to the **Space Setup** flow. If there is scene
-information for the current environment, the player can advance to one of these
-three options:
+This introductory scene lets players view, scan, and modify their scene. If no scene data exists, players enter the **Space Setup** flow. If scene data exists, players can:
 
-1. [TutorialScene](#tutorialscene): starts the tutorial for the player.
-2. [GameScene](#gamescene): starts the game for the player.
-3. Trigger **Space Setup**: using the left trigger, the player can restart the
-   **Space Setup** process, allowing them to rescan the environment in case
-   something has changed.
+1. Start the [TutorialScene](#tutorialscene).
+2. Start the [GameScene](#gamescene).
+3. Restart **Space Setup** by pressing the left trigger to rescan the environment.
 
 |                      Rescan Scene                      |                     Start Game                     |
 | :----------------------------------------------------: | :------------------------------------------------: |
-| ![RescenScene](./Media/LobbyScene1.PNG 'Rescen Scene') | ![StartGame](./Media/LobbyScene2.PNG 'Start Game') |
+| ![RescanScene](./Media/LobbyScene1.PNG 'Rescan Scene') | ![StartGame](./Media/LobbyScene2.PNG 'Start Game') |
 
 ## TutorialScene
 
-The tutorial scene introduces the player to game mechanics. In this scene, the
-player will learn how to:
+The tutorial teaches players to:
 
 - Use the Polterblast 3000.
 - Place the Ecto Blaster.
 - Shoot and interact with Phantoms.
 
-When running the app for the first time, the tutorial is mandatory. Afterward,
-the player will have the option to repeat the tutorial, or jump right into the
-game.
+The tutorial is mandatory on first run. Afterwards, players can repeat it or skip to the game.
 
-In this scene, you can find examples of how some subcomponents (excluding
-Phanto) are used in the game. In addition, a set of controller-locked UI screens
-can be found here.
+This scene includes examples of subcomponents (excluding Phanto) and controller-locked UI screens.
 
 |                     Welcome                     |                   Polterblast                   |                  Ecto Blaster                   |                    Phantoms                     |                   Start Game                    |
 | :---------------------------------------------: | :---------------------------------------------: | :---------------------------------------------: | :---------------------------------------------: | :---------------------------------------------: |
@@ -344,23 +270,18 @@ can be found here.
 
 ![Game Controls](./Media/GameControls.png 'Controls')
 
-This scene includes prefabs for the main game components:
+This scene contains prefabs for:
 
 - Phanto
 - Phantoms
 - Polterblast 3000
 - Ecto Blaster
 
-You can use the scene in standalone mode and run it using Oculus Link, or by
-building and deploying it to your device.
+You can run this scene standalone, via Meta Quest Link, or by building and deploying to your device.
 
-All the game components are present in this scene, and restarting the game is as
-simple as reloading the scene. In addition, you can find debug features within
-the scene, that can be enabled using the **Menu** button on the left controller.
+Restarting the game is as simple as reloading the scene. Debug features can be enabled with the **Menu** button on the left controller.
 
-Within the scene, you can find the **PhantoSceneActor** component, which takes
-care of loading the mesh and scene information. Other components in the scene
-are used to manage sound, GUI alerts, runtime assets, and game events.
+The scene includes the **PhantoSceneActor** component, which loads the mesh and scene data. Other components manage sound, GUI alerts, runtime assets, and game events.
 
 |                          Object Placement                           |                                AI Navigation                                 |
 | :-----------------------------------------------------------------: | :--------------------------------------------------------------------------: |
@@ -374,46 +295,42 @@ The haptic assets used in this project have been designed with [Haptics Studio](
 
 To learn more about the Haptics SDK for Unreal, and how dynamically modulated haptics were implemented, check out the [BP_VRExamplePawn](https://github.com/oculus-samples/Unreal-Phanto/blob/main/Plugins/MetaXRHaptics/Content/Example/Blueprints/BP_VRExamplePawn.uasset) blueprint in the Haptics Scene, or the `Play random sound and haptic` function in the [BP_Phanto](https://github.com/oculus-samples/Unreal-Phanto/blob/main/Content/Phanto/Enemies/Phanto/BP_Phanto.uasset) blueprint for the Phanto haptics featured in the main game loop!
 
-# Features illustrated
+# Features Illustrated
 
 ## Content Placement
 
 ![Content Placement](./Media/ContentPlacement.gif 'Content Placement')
 
-The [BP_EctoBlasterSpawner](./Content/Phanto/EctoBlaster/BP_EctoBlasterSpawner.uasset) blueprint illustrates how to use the global mesh to place an object on the surfaces of the room.
+The [BP_EctoBlasterSpawner](./Content/Phanto/EctoBlaster/BP_EctoBlasterSpawner.uasset) blueprint shows how to use the global mesh to place objects on room surfaces.
 
 ## Mesh Collisions
 
 ![Mesh Collisions](./Media/MeshCollisions.gif 'Mesh Collisions')
 
-The [EctoStream](./Content/Phanto/EctoFluid/EctoStream.uasset) particle system demonstrates using the global mesh for physics. Using fast collisions, the recommended way, the Ectofluid splashes off the mesh. It does this by using the Collision module in the Niagara particle system to bounce the particles off the surface of the global mesh.
+The [EctoStream](./Content/Phanto/EctoFluid/EctoStream.uasset) particle system uses the global mesh for physics. Fast collisions cause Ectofluid to splash off the mesh by bouncing particles off the surface using Niagara's Collision module.
 
 ## Air Navigation
 
 ![Air Navigation](./Media/AirNavigation.gif 'Air Navigation')
 
-[BP_Phanto](./Content/Phanto/Enemies/Phanto/BP_Phanto.uasset) shows
-how to use the scanned mesh as a sensor for an air navigated character (Phanto). See the `OnSphereOverlap` function in that blueprint for more info.
+[BP_Phanto](./Content/Phanto/Enemies/Phanto/BP_Phanto.uasset) uses the scanned mesh as a sensor for air navigation. See the `OnSphereOverlap` function for details.
 
 ## Mesh Navigation
 
 ![Mesh Navigation](./Media/MeshNavigation.gif 'Mesh Navigation')
 
-[GameScene](./Content/Phanto/Maps/GameScene.umap)'s Level Blueprint shows
-how to use the mesh for ground navigation, with and without additional bounding
-box information on the furniture (acquired using manual capture of the room
-elements). You can see the NavMesh by running the console command `show Navigation` through the `~` terminal, or through [adb](https://developer.oculus.com/blog/developer-perspective-ue4-logging-and-console-commands-for-mobile-vr/) when on on device.
+The [GameScene](./Content/Phanto/Maps/GameScene.umap) Level Blueprint uses the mesh for ground navigation, with optional bounding boxes for furniture captured manually. You can view the NavMesh by running the console command `show Navigation` via the `~` terminal or [adb](https://developers.meta.com/horizon/blog/developer-perspective-ue4-logging-and-console-commands-for-mobile-vr/) on a device.
 
-The scene's NavMesh is dynamically generated using the settings in [DefaultEngine.ini](./Config/DefaultEngine.ini) under `[/Script/NavigationSystem.RecastNavMesh]` and `[/Script/NavigationSystem.NavigationSystemV1]`.
+The NavMesh is dynamically generated using settings in [DefaultEngine.ini](./Config/DefaultEngine.ini) under `[/Script/NavigationSystem.RecastNavMesh]` and `[/Script/NavigationSystem.NavigationSystemV1]`.
 
-Note that `bInitialBuildingLocked=True`. This allows GameScene to wait until the scene anchors have been spawned before creating the NavMesh, which is done when it calls `ReleaseInitialBuildingLock()`.
+Note: `bInitialBuildingLocked=True` delays NavMesh creation until scene anchors spawn, triggered by `ReleaseInitialBuildingLock()`.
 
-Once the NavMesh has been generated, GameScene also calls `SetNavigationRuntimeGenerationMode(Static)` and `ConfigureNavigationSystemAsStatic(true)`.
+After generation, GameScene calls `SetNavigationRuntimeGenerationMode(Static)` and `ConfigureNavigationSystemAsStatic(true)`.
 
-All of these functions are available in [PhantoBlueprintFunctionLibrary.h](./Source/Phanto/Public/PhantoBlueprintFunctionLibrary.h).
+All functions are in [PhantoBlueprintFunctionLibrary.h](./Source/Phanto/Public/PhantoBlueprintFunctionLibrary.h).
 
 ## Scene Visualization
 
 ![Scene Visualization](./Media/SceneVisualization.gif 'Scene Visualization')
 
-The [LobbyScene](./Content/Phanto/Maps/LobbyScene.umap) presents the mesh and the furniture bounding box, if available.
+The [LobbyScene](./Content/Phanto/Maps/LobbyScene.umap) displays the mesh and furniture bounding boxes if available.

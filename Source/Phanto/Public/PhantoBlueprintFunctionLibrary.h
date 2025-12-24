@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "AI/Navigation/NavLinkDefinition.h"
 #include "CoreMinimal.h"
 #include "Containers/UnrealString.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
